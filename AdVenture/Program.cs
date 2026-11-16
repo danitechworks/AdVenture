@@ -19,7 +19,19 @@ namespace AdVenture
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // Add DataInitializer
+            builder.Services.AddScoped<DataInitializer>();
+
             var app = builder.Build();
+
+            // Seed the database with initial data
+            using (var scope = app.Services.CreateScope())
+            {
+                var initializer = scope.ServiceProvider
+                    .GetRequiredService<DataInitializer>();
+
+                initializer.SeedData();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
