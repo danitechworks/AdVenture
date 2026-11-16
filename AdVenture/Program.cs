@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using AdVenture.Data;
 
 namespace AdVenture
 {
@@ -13,18 +15,38 @@ namespace AdVenture
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            // Add DbConext 
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add DataInitializer
+            builder.Services.AddScoped<DataInitializer>();
+
             var app = builder.Build();
+
+            // Seed the database with initial data
+            using (var scope = app.Services.CreateScope())
+            {
+                var initializer = scope.ServiceProvider
+                    .GetRequiredService<DataInitializer>();
+
+                initializer.SeedData();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.UseSwaggerUI(appAction => 
+                {
+                    appAction.SwaggerEndpoint("/openapi/v1.json", "AdVenture API v1");
+                    appAction.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseAuthorization();
-
 
             app.MapControllers();
 
