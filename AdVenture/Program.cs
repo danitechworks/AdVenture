@@ -19,12 +19,16 @@ namespace AdVenture
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.UseSwaggerUI(appAction => 
+                {
+                    appAction.SwaggerEndpoint("/openapi/v1.json", "AdVenture API v1");
+                    appAction.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseAuthorization();
-
 
             app.MapControllers();
 
