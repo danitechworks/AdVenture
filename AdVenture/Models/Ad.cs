@@ -8,7 +8,6 @@
         public decimal Price { get; set; }
         public string Category { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public bool IsActive { get; set; } = true;
     }
 }

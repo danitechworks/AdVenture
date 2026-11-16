@@ -1,5 +1,6 @@
 ﻿using AdVenture.Data;
 using Microsoft.AspNetCore.Mvc;
+using AdVenture.Models;
 
 
 namespace AdVenture.Controllers
@@ -32,6 +33,21 @@ namespace AdVenture.Controllers
                 return NotFound();
             }
             return Ok(ad);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAd(NewAd newAd)
+        {
+            var ad = new Ad
+            {
+                Title = newAd.Title,
+                Description = newAd.Description,
+                Price = newAd.Price,
+                Category = newAd.Category
+            };
+            _context.Ads.Add(ad);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetAdById), new { id = ad.Id }, ad);
         }
     }
 }
