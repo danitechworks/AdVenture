@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using AdVenture.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace AdVenture
 {
@@ -9,10 +10,19 @@ namespace AdVenture
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container.            
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.NumberHandling =
+                        JsonNumberHandling.Strict;
+                });
 
-            builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            builder.Services.ConfigureHttpJsonOptions(options =>
+            {
+                options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict;
+            });
             builder.Services.AddOpenApi();
 
             // Add DbConext 
