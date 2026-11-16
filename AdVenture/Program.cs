@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using AdVenture.Data;
 
 namespace AdVenture
 {
@@ -12,6 +14,10 @@ namespace AdVenture
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            // Add DbConext 
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
