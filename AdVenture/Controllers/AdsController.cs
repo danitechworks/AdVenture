@@ -19,6 +19,7 @@ namespace AdVenture.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<Ad>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAds()
         {
             var ads = _context.Ads.ToList();
@@ -26,6 +27,9 @@ namespace AdVenture.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Ad), StatusCodes.Status200OK)]        
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAdById(int id)
         {
             var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
@@ -37,6 +41,8 @@ namespace AdVenture.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(Ad), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAd(NewAd newAd)
         {
             var ad = new Ad
@@ -52,6 +58,9 @@ namespace AdVenture.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Ad), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAd(int id, NewAd newAd)
         {
             var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
@@ -72,6 +81,8 @@ namespace AdVenture.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Ad), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAd(int id)
         {
             var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
@@ -87,6 +98,9 @@ namespace AdVenture.Controllers
         }
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(typeof(Ad), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PatchAd(int id, [FromBody] PatchAd updates)
         {
             var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
