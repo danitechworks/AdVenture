@@ -39,8 +39,8 @@ namespace AdVenture.Data
                 new() { Title = "Bosch Cordless Drill", Description = "18V cordless drill with battery, charger and case.", Price = 900m, Category = "Tools" },
                 new() { Title = "Acoustic Guitar Yamaha F310", Description = "Beginner-friendly guitar with soft carrying case.", Price = 750m, Category = "Music" },
                 new() { Title = "Baby Stroller Emmaljunga", Description = "Well-maintained stroller with rain cover.", Price = 1600m, Category = "Baby & Kids" },
-                new() { Title = "Apple iPad 10th Generation", Description = "64GB Wi-Fi model, excellent condition.", Price = 3100m, Category = "Electronics", IsActive = false },
-                new() { Title = "Coffee Table in Walnut", Description = "Modern walnut coffee table with small surface scratches.", Price = 550m, Category = "Furniture", IsActive = false }
+                new() { Title = "Apple iPad 10th Generation", Description = "64GB Wi-Fi model, excellent condition.", Price = 3100m, Category = "Electronics" },
+                new() { Title = "Coffee Table in Walnut", Description = "Modern walnut coffee table with small surface scratches.", Price = 550m, Category = "Furniture" }
             };
 
             _context.Ads.AddRange(ads);
