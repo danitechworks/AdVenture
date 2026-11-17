@@ -1,6 +1,7 @@
 ﻿using AdVenture.Data;
 using Microsoft.AspNetCore.Mvc;
 using AdVenture.Models;
+using System.Text.Json;
 
 
 namespace AdVenture.Controllers
@@ -82,6 +83,35 @@ namespace AdVenture.Controllers
             _context.Ads.Remove(ad);
             await _context.SaveChangesAsync();
 
+            return Ok(ad);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchAd(int id, [FromBody] PatchAd updates)
+        {
+            var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
+            if (ad == null)
+            {
+                return NotFound();
+            }
+
+            if (updates.Title is not null)
+                ad.Title = updates.Title;
+
+            if (updates.Description is not null)
+                ad.Description = updates.Description;
+
+            if (updates.Price is decimal price)
+                ad.Price = price;
+
+            if (updates.Category is not null)
+                ad.Category = updates.Category;
+
+            ModelState.Clear();
+            if (!TryValidateModel(ad))
+                return ValidationProblem(ModelState);
+
+            await _context.SaveChangesAsync();
             return Ok(ad);
         }
     }
