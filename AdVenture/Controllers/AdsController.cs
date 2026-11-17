@@ -27,7 +27,7 @@ namespace AdVenture.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAdById(int id)
         {
-            var ad = _context.Ads.Find(id);
+            var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
             if (ad == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace AdVenture.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAd(int id, NewAd newAd)
         {
-            var ad = _context.Ads.Find(id);
+            var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
             if (ad == null)
             {
                 return NotFound();
@@ -65,6 +65,21 @@ namespace AdVenture.Controllers
             ad.Category = newAd.Category;
 
             _context.Ads.Update(ad);
+            await _context.SaveChangesAsync();
+
+            return Ok(ad);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAd(int id)
+        {
+            var ad = _context.Ads.FirstOrDefault(x => x.Id == id);
+            if (ad == null)
+            {
+                return NotFound();
+            }
+
+            _context.Ads.Remove(ad);
             await _context.SaveChangesAsync();
 
             return Ok(ad);
