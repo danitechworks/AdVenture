@@ -49,5 +49,25 @@ namespace AdVenture.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetAdById), new { id = ad.Id }, ad);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAd(int id, NewAd newAd)
+        {
+            var ad = _context.Ads.Find(id);
+            if (ad == null)
+            {
+                return NotFound();
+            }
+
+            ad.Title = newAd.Title;
+            ad.Description = newAd.Description;
+            ad.Price = newAd.Price;
+            ad.Category = newAd.Category;
+
+            _context.Ads.Update(ad);
+            await _context.SaveChangesAsync();
+
+            return Ok(ad);
+        }
     }
 }
