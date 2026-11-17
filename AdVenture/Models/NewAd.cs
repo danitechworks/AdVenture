@@ -13,7 +13,7 @@ namespace AdVenture.Models
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        [Range(typeof(decimal), "0", "1000000")]
+        [Range(typeof(decimal), "1", "1000000")]
         public decimal Price { get; set; }
 
         [Required]

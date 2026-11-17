@@ -10,7 +10,7 @@ namespace AdVenture.Models
         [StringLength(2000, MinimumLength = 1)]
         public string? Description { get; set; }
 
-        [Range(typeof(decimal), "0", "1000000")]
+        [Range(typeof(decimal), "1", "1000000")]
         public decimal? Price { get; set; }
 
         [StringLength(50, MinimumLength = 1)]

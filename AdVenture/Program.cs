@@ -34,13 +34,13 @@ namespace AdVenture
 
             var app = builder.Build();
 
-            // Seed the database with initial data
+            // Migrate the database 
             using (var scope = app.Services.CreateScope())
             {
                 var initializer = scope.ServiceProvider
                     .GetRequiredService<DataInitializer>();
 
-                initializer.SeedData();
+                initializer.MigrateData();
             }
 
             // Configure the HTTP request pipeline.
